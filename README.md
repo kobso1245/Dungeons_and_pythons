@@ -1,2 +1,4 @@
 # Dungeons_and_pythons
-We gunna do it!!
+Things to add:
+-get_damage() method returning the damage of the weapon(int value)
+-get_name() method returning the name of the weapon(str value)
