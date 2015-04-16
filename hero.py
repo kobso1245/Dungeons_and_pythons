@@ -1,33 +1,57 @@
 
 class Hero:
-    def __init__ (self, name, title, health, mana, mana_regeneration_rate):
-        self.name = name
-        self.title = title
-        self.start_health=100
-        self.health = health
-        self.start_mana=100
-        self.mana = mana
-        self.mana_regeneration_rate = 2
+    def __init__ ( self, name, title, health, mana, mana_regeneration_rate):
+        self.__name = name
+        self.__title = title
+        self.__start_health = 100
+        self.__health = health
+        self.__start_mana = 100
+        self.__mana = mana
+        self.__mana_regeneration_rate = 2
 
-    def known_as(self):
+    def known_as( self):
         return "{} the {}".format(self.get_name(), self.get_title())
 
-    def get_name(self):
-        return self.name
+    def get_name( self):
+        return self.__name
 
     def get_title ( self):
-        return self.title
+        return self.__title
 
-    def get_health(self):
-        return self.health
+    def get_health( self):
+        return self.__health
 
-    def get_mana (self):
-        return self.mana
+    def get_mana ( self):
+        return self.__mana
 
-    def is_alive(self):
-        if get_heath(self)>0:
+    def is_alive( self):
+        if get_health( self) > 0:
             return True
         return False
+
+    def can_cast( self):
+        if get_mana( self) > 0:
+            return True
+        return False
+
+    def take_damage( self, damage_points):
+        if self.__health < damage_points:
+            return self.__health = 0
+        return self.__health = self.__health - damage_points
+
+    def take_healing( self, healing_points):
+        a = self.__health + healing_points
+        if a > self.__start_health:
+            return self.__health = 100
+        return self.__health = a
+
+    def take_mana( self, mana_points):
+        a = self.__mana + mana_points
+        if a > self.__start_mana:
+            return self.__mana = self.__start_mana
+        return self.__mana = a
+
+    def
 
 
 
