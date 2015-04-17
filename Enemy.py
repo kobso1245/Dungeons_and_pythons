@@ -1,4 +1,4 @@
-class Enemy():
+class Warrior():
     def __init__(self, health=100, mana=100, damage=20):
         self.__health = health
         self.__start_health = health
@@ -70,3 +70,5 @@ class Enemy():
                 print("No spell found!")
                 return False
 
+class Enemy(Warrior):
+    pass
