@@ -36,6 +36,9 @@ class Hero:
 
         return self.__mana
 
+    def get_mana_regeneration_rate(self):
+        return self.__mana_regeneration_rate
+
 
     def is_alive( self):
 
@@ -98,14 +101,16 @@ class Hero:
             return False
 
     def attack(self, by= ""):
-    if by == "weapon" :
-        return self.__weapon.get_damage()
-    elif by == "spell":
+        if by == "weapon" :
+            return self.__weapon.get_damage()
+        if by == "spell":
             if self.__mana >= self.__spell.get_mana_cost():
                 self.__mana -= self.__spell.get_mana_cost()
                 return self.__spell.get_damage()
             else:
                 return False
+
+
 
 
 
