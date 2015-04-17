@@ -1,4 +1,4 @@
-class Warrior():
+class Enemy():
     def __init__(self, health=100, mana=100, damage=20):
         self.__health = health
         self.__start_health = health
@@ -43,11 +43,16 @@ class Warrior():
         if type(weapon) is Weapon:
             self.__weapon = weapon
             return
-        if type(weapon) is Spell:
-            self.__spell = weapon
-            return
         else:
             print("Wrong weapon")
+            return False
+
+    def learn(self, spell):
+        if type(spell) is Spell:
+            self.__spell = spell
+            return
+        else:
+            print("Wrong input")
             return False
 
     def attack(self, by=""):
@@ -70,5 +75,8 @@ class Warrior():
                 print("No spell found!")
                 return False
 
-class Enemy(Warrior):
-    pass
+    def take_damage(self, damage):
+        if self.__health - damage <= 0:
+            self.__health = 0
+        else:
+            self.__health -= damage
