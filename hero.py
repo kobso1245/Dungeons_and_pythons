@@ -2,12 +2,14 @@
 class Hero:
     def __init__ ( self, name, title, health, mana, mana_regeneration_rate):
         self.__name = name
-        self.__title = title
+        self.__title = "Bron"
         self.__start_health = 100
         self.__health = health
         self.__start_mana = 100
         self.__mana = mana
         self.__mana_regeneration_rate = 2
+        self.__weapon = weapon
+        self.__spell = spell
 
 
     def known_as( self):
@@ -58,7 +60,7 @@ class Hero:
 
 
     def take_healing( self, healing_points):
-        if is_alive(self) == False
+        if is_alive(self) == False:
             return False
 
         a = self.__health + healing_points
@@ -81,7 +83,35 @@ class Hero:
 
 
     def equip(self, weapon):
-        pass
+        if type(weapon) is Weapon:
+            self.__weapon = weapon
+        else:
+            print("This is not a weapon")
+            return False
+
+
+    def learn(self, spell):
+        if type(spell) is Spell:
+            self.__spell = spell
+        else:
+            print("This is not a spell")
+            return False
+
+    def attack(self, by= ""):
+    if by == "weapon" :
+        return self.__weapon.get_damage()
+    elif by == "spell":
+            if self.__mana >= self.__spell.get_mana_cost():
+                self.__mana -= self.__spell.get_mana_cost()
+                return self.__spell.get_damage()
+            else:
+                return False
+
+
+
+
+
+
 
 
 
