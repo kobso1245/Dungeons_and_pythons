@@ -1,4 +1,4 @@
 #To do list:
--Test everything
--Grab a coffee
+ - Test everything
+ - Grab a coffee
 
