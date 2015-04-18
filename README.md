@@ -1,4 +1,3 @@
-# Dungeons_and_pythons
-Things to add:
-get_damage() method returning the damage of the weapon(int value); 
-get_name() method returning the name of the weapon(str value)
+#Dillinger
+
+Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
