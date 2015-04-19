@@ -4,10 +4,12 @@
  - Hero can move freely in the dungeon
  - Hero can detect Enemies, Walls and Treasures
  - Dungeon's map can be printed
+ - Treasures are randomly picked
+ - Written tests for the hero movement
 
 #To do list for the Dungeon class:
  - Make the actual Enemies and Treasures on the map
- - Make the Enemies and Treasures be random
+ - Make the Enemies be random
  - Add couple more spawn points on the map so the Hero can respawn(still thinking if this is actually a good idea or not)
 
 #To do list for all other classes:
