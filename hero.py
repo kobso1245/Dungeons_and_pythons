@@ -1,5 +1,3 @@
-from weapon_and_spell import Weapon
-
 
 class Hero:
     def __init__ ( self, name="Bron", title="Dragonslayer", health=100, mana=100, mana_regeneration_rate=2):

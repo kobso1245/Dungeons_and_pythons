@@ -2,8 +2,8 @@
 class Weapon:
 
     def __init__( self, name, damage):
-        self.__name = name
-        self.__damage = 20
+        self.__name = "no weapon"
+        self.__damage = 0
 
     def get_damage( self):
         return self.__damage
