@@ -1,6 +1,8 @@
 import random
+from weapon_and_spell import Weapon, Spell
 class Dungeon:
     def __init__(self, path="", rows=5, cols=8):
+       self.__hero = ""
        self.__hero_pos = (0,0)
        self.__rows = rows
        self.__cols = cols
@@ -93,12 +95,9 @@ class Dungeon:
         print(printable)
 
     def spawn(self, hero):
-        for row in range(self.__rows):
-            for col in range(self.__cols):
-                if self.__map[row][col] == 'S':
-                    self.__map[row][col] = 'H'
-                    return
-        self.__map[0][0] = 'H'
+        self.__hero_pos = 'E'
+        self.__hero_pos = self.__last_spawn
+        self.__hero_pos = 'H'
 
     def __movement(self, new_hero_pos):
         if self.__map[new_hero_pos[0]][new_hero_pos[1]] in ['#', 'T', 'E']:
@@ -109,6 +108,19 @@ class Dungeon:
                 print("Treasure found: ")
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = '.'
                 self.__hero_pos = new_hero_pos
+
+                treasure = self.spawn_treasure()
+                if type(treasure) is ManaPotion:
+                    self.__hero.take_mana(treasure.get_mana)
+
+                if type(treasure) is HealthPotion:
+                    self.__hero.take_healing(treasure.get_health)
+
+                if type(treasure) is Weapon:
+                    self.equip(treasure)
+
+                if type(treasure) is Spell:
+                    self.learn(treasure)
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
                 return True
 
@@ -162,6 +174,36 @@ class Dungeon:
         else:
             print("Wrong command!!!")
 
+    def spawn_treasure(self):
+        weapon_damage = random.randrange(10, 130)
+        weap = Weapon("random", weapon_damage)
+        spell_damage = random.randrange(5,90)
+        spell_cost = random.randrange(2,60)
+        spell_range = random.randrange(1, self.__cols - 1)
+        spell = Spell("random", spell_range)
+        health_potion = HealthPotion()
+        mana_potion = ManaPotion()
+        to_choose_from = [mana_potion,
+                          health_potion,
+                          weap,
+                          spell]
+
+        return random.choice(to_choose_from)
+
+class ManaPotion:
+    def __init__(self):
+        self.__health = random.randrange(5,90)
+    def get_mana(self):
+        return self.__health
+
+class HealthPotion:
+    def __init__(self):
+        self.__health = random.randrange(5,150)
+    def get_health(self):
+        return self.__health
+
 if __name__ == "__main__":
-    dun = Dungeon.generate_map(rows=12, cols=14)
-    dun.print_map()
+    #dun = Dungeon.generate_map(rows=12, cols=14)
+    #dun.print_map()
+    dung = Dungeon("test", 5, 10)
+    print(dung.__dict__)
