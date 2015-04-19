@@ -1,15 +1,15 @@
 
 class Hero:
-    def __init__ ( self, name, title, health, mana, mana_regeneration_rate):
+    def __init__ ( self, name="Bron", title="Dragonslayer", health=100, mana=100, mana_regeneration_rate=2):
         self.__name = name
-        self.__title = "Bron"
-        self.__start_health = 100
+        self.__title = title
+        self.__start_health = health
         self.__health = health
-        self.__start_mana = 100
+        self.__start_mana = mana
         self.__mana = mana
-        self.__mana_regeneration_rate = 2
-        self.__weapon = weapon
-        self.__spell = spell
+        self.__mana_regeneration_rate = mana_regeneration_rate
+        self.__weapon = 0
+        self.__spell = 0
 
 
     def known_as( self):
@@ -42,14 +42,14 @@ class Hero:
 
     def is_alive( self):
 
-        if get_health( self) > 0:
+        if self.__get_health() > 0:
             return True
         return False
 
 
     def can_cast( self):
 
-        if get_mana( self) > 0:
+        if self.__get_mana() > 0:
             return True
         return False
 
@@ -110,6 +110,8 @@ class Hero:
             else:
                 return False
 
+
+a=Hero("ivan","sda",23,3,"sa")
 
 
 
