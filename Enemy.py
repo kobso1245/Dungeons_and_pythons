@@ -23,6 +23,9 @@ class Enemy():
     def get_mana(self):
         return self.__mana
 
+    def get_damage(self):
+        return self.__damage
+
     def take_mana(self, mana_points):
         if self.__mana + mana_points > self.__start_mana:
             self.__mana = self.__start_mana

@@ -1,5 +1,6 @@
 import random
 from weapon_and_spell import Weapon, Spell
+from hero import Hero
 class Dungeon:
     def __init__(self, path="", rows=5, cols=8):
        self.__hero = ""
@@ -59,7 +60,7 @@ class Dungeon:
         curr_map[row][col] = 'S'
         while road_len >= 0:
             to_choose_from = dungeon.adj(row, col)
-            if to_choose_from != []: 
+            if to_choose_from != []:
                 next_pos = random.choice(to_choose_from)
                 row = next_pos[0]
                 col = next_pos[1]
@@ -151,7 +152,7 @@ class Dungeon:
                 if self.__hero_pos[0] >= 1:
                     new_hero_pos = (self.__hero_pos[0] - 1,
                                     self.__hero_pos[1])
-                    self.__movement(new_hero_pos) 
+                    self.__movement(new_hero_pos)
                     return True
                 else:
                     return False
@@ -200,6 +201,25 @@ class Dungeon:
 
         return random.choice(to_choose_from)
 
+
+    def hero_attack(self, by = ""):
+    if by == "":
+       print("Should choose between weapon and spell!")
+    else:
+        if by == "weapon":
+            if :
+                pass:
+
+            else:
+                return False
+        if by == "spell" :
+            if
+
+
+            else:
+                return False
+
+
 class ManaPotion:
     def __init__(self):
         self.__health = random.randrange(5,90)
@@ -217,3 +237,4 @@ if __name__ == "__main__":
     #dun.print_map()
     dung = Dungeon("test", 5, 10)
     print(dung.__dict__)
+

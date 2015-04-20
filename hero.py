@@ -39,6 +39,10 @@ class Hero:
     def get_mana_regeneration_rate(self):
         return self.__mana_regeneration_rate
 
+    def get_damage(self):
+        return self.__damage
+
+
 
     def is_alive( self):
 
@@ -109,6 +113,8 @@ class Hero:
                 return self.__spell.get_damage()
             else:
                 return False
+
+
 
 
 a=Hero("ivan","sda",23,3,"sa")
