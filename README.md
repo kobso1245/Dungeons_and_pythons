@@ -6,6 +6,7 @@
  - Dungeon's map can be printed
  - Treasures are randomly picked
  - Written tests for the hero movement
+ - Made some adjustments on the hero and Enemy files
 
 #To do list for the Dungeon class:
  - Make the actual Enemies and Treasures on the map
