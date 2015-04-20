@@ -128,6 +128,16 @@ class Dungeon:
                 print("Enemy found")
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = '.'
                 self.__hero_pos = new_hero_pos
+
+                #enemy spawner
+                enemy = Enemy(health = random.randrange(50,300),
+                              mana = random.randrange(20,100),
+                              damage = random.randrange(20,200))
+
+                #initiate fight
+                fight = Fight(self.__hero, enemy)
+                fight.start_fight()
+
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
         else:
             self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = '.'
