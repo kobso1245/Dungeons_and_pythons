@@ -1,3 +1,4 @@
+from weapon_and_spell import *
 
 class Hero:
     def __init__ ( self, name="Bron", title="Dragonslayer", health=100, mana=100, mana_regeneration_rate=2):
@@ -46,14 +47,14 @@ class Hero:
 
     def is_alive( self):
 
-        if self.__get_health() > 0:
+        if self.__health > 0:
             return True
         return False
 
 
     def can_cast( self):
 
-        if self.__get_mana() > 0:
+        if self.__mana > 0:
             return True
         return False
 
@@ -67,7 +68,7 @@ class Hero:
 
 
     def take_healing( self, healing_points):
-        if is_alive(self) == False:
+        if self.is_alive() == False:
             return False
 
         a = self.__health + healing_points
