@@ -1,8 +1,10 @@
 import random
 from weapon_and_spell import Weapon, Spell
+from Enemy import Enemy
+from hero import Hero
 class Dungeon:
     def __init__(self, path="", rows=5, cols=8):
-       self.__hero = ""
+       self.__hero = Hero()
        self.__hero_pos = (0,0)
        self.__rows = rows
        self.__cols = cols
@@ -20,6 +22,9 @@ class Dungeon:
 
     def get_rows(self):
         return self.__rows
+
+    def get_hero(self):
+        return self.__hero
 
     def get_cols(self):
         return self.__cols
@@ -83,6 +88,7 @@ class Dungeon:
         #adding obsticles(such English, much fail)
         curr_map = [['#' if elem == 0 else elem for elem in row] for row in curr_map]
         dungeon.set_map(curr_map)
+        dungeon.spawn(dungeon.get_hero())
         return dungeon
 
     def print_map(self):
@@ -97,7 +103,8 @@ class Dungeon:
     def spawn(self, hero):
         self.__hero_pos = 'E'
         self.__hero_pos = self.__last_spawn
-        self.__hero_pos = 'H'
+        self.__hero_pos = (0,0)
+        self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
 
     def __movement(self, new_hero_pos):
         if self.__map[new_hero_pos[0]][new_hero_pos[1]] in ['#', 'T', 'E']:
@@ -105,22 +112,32 @@ class Dungeon:
                 return False
 
             if self.__map[new_hero_pos[0]][new_hero_pos[1]] == 'T':
-                print("Treasure found: ")
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = '.'
                 self.__hero_pos = new_hero_pos
 
                 treasure = self.spawn_treasure()
                 if type(treasure) is ManaPotion:
-                    self.__hero.take_mana(treasure.get_mana)
+                    print("Mana pot found")
+                    mana = treasure.get_mana()
+                    self.__hero.take_mana(mana)
+                    print("Hero healed with {} mana".format(mana))
+                    print("Hero's mana is: {}".format(self.__hero.get_mana()))
 
                 if type(treasure) is HealthPotion:
-                    self.__hero.take_healing(treasure.get_health)
+                    print("Healing pot found!")
+                    health = treasure.get_health()
+                    self.__hero.take_healing(health)
+                    print("Hero healed with {} health".format(health))
+                    print("Hero;s health is: {}".format(self.__hero.get_health()))
 
                 if type(treasure) is Weapon:
-                    self.equip(treasure)
+                    print("Weapon found!")
+                    self.__hero.equip(treasure)
 
                 if type(treasure) is Spell:
-                    self.learn(treasure)
+                    print("Spell found!")
+                    self.__hero.learn(treasure)
+
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
                 return True
 
@@ -135,8 +152,8 @@ class Dungeon:
                               damage = random.randrange(20,200))
 
                 #initiate fight
-                fight = Fight(self.__hero, enemy)
-                fight.start_fight()
+                #fight = Fight(self.__hero, enemy)
+                #fight.start_fight()
 
                 self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
         else:
@@ -151,7 +168,8 @@ class Dungeon:
                 if self.__hero_pos[0] >= 1:
                     new_hero_pos = (self.__hero_pos[0] - 1,
                                     self.__hero_pos[1])
-                    self.__movement(new_hero_pos) 
+                    self.__movement(new_hero_pos)
+                    self.print_map()
                     return True
                 else:
                     return False
@@ -160,6 +178,7 @@ class Dungeon:
                     new_hero_pos = (self.__hero_pos[0] + 1,
                                     self.__hero_pos[1])
                     self.__movement(new_hero_pos)
+                    self.print_map()
                     return True
                 else:
                     return False
@@ -168,6 +187,7 @@ class Dungeon:
                     new_hero_pos = (self.__hero_pos[0],
                                     self.__hero_pos[1] - 1)
                     self.__movement(new_hero_pos)
+                    self.print_map()
                     return True
                 else:
                     return False
@@ -177,6 +197,7 @@ class Dungeon:
                     new_hero_pos = (self.__hero_pos[0],
                                     self.__hero_pos[1] + 1)
                     self.__movement(new_hero_pos)
+                    self.print_map()
                     return True
                 else:
                     return False
@@ -190,7 +211,7 @@ class Dungeon:
         spell_damage = random.randrange(5,90)
         spell_cost = random.randrange(2,60)
         spell_range = random.randrange(1, self.__cols - 1)
-        spell = Spell("random", spell_range)
+        spell = Spell("random",spell_damage, spell_cost, spell_range)
         health_potion = HealthPotion()
         mana_potion = ManaPotion()
         to_choose_from = [mana_potion,
@@ -202,18 +223,31 @@ class Dungeon:
 
 class ManaPotion:
     def __init__(self):
-        self.__health = random.randrange(5,90)
+        self.__health = int(random.randrange(5,90))
     def get_mana(self):
-        return self.__health
+        return int(self.__health)
 
 class HealthPotion:
     def __init__(self):
-        self.__health = random.randrange(5,150)
+        self.__health = int(random.randrange(5,150))
     def get_health(self):
-        return self.__health
+        return int(self.__health)
+
+
+class Fight:
+    def __init__(self, hero, enemy):
+        self.__hero = hero
+        self.__enemy = enemy
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     #dun = Dungeon.generate_map(rows=12, cols=14)
     #dun.print_map()
-    dung = Dungeon("test", 5, 10)
-    print(dung.__dict__)
+    dung = Dungeon.generate_map(7, 14)

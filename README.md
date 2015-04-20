@@ -11,6 +11,9 @@
  - Make the actual Enemies and Treasures on the map
  - Make the Enemies be random
  - Add couple more spawn points on the map so the Hero can respawn(still thinking if this is actually a good idea or not)
+ - Make the actual atack logic
+ 
+
 
 #To do list for all other classes:
  - Tweak the Hero, Enemy, Treasure, Weapon and Spell class
