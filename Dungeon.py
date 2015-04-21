@@ -2,6 +2,7 @@ import random
 from weapon_and_spell import Weapon, Spell
 from Enemy import Enemy
 from hero import Hero
+from Fight import *
 class Dungeon:
     def __init__(self, path="", rows=5, cols=8):
        self.__hero = Hero()
@@ -101,10 +102,59 @@ class Dungeon:
         print(printable)
 
     def spawn(self, hero):
+        weapon = Weapon("Fart gun", 50)
+        self.__hero.equip(weapon)
         self.__hero_pos = 'E'
         self.__hero_pos = self.__last_spawn
         self.__hero_pos = (0,0)
         self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
+
+    def hero_atack(self):
+        enemy = Enemy(health = random.randrange(50,150),
+                      mana = random.randrange(20,100),
+                      damage = random.randrange(20,80))
+
+        #finding the enemy
+        distance = 0
+        curr_vec = 1
+        row = self.__hero_pos[0]
+        col = self.__hero_pos[1]
+        choices = []
+        atack_range = self.__hero.get_cast_range()
+
+        if atack_range:
+            while row - curr_vec >= 0 and curr_vec <= atack_range:
+                choices.append((row - curr_vec, col))
+                curr_vec -= 1
+            
+            curr_vec = 1
+            while col + curr_vec < self.__cols and curr_vec <= atack_range:
+                choices.append((row, col + curr_vec))
+                curr_vec += 1
+
+            curr_vec = 1
+            while row + curr_vec < self.__rows and curr_vec <= atack_range:
+                choices.append((row + curr_vec, col))
+                curr_vec += 1
+
+            curr_vec = 1
+            while col - curr_vec >= 0 and curr_vec <= atack_range:
+                choices.append(row, col + curr_vec)
+                curr_vec -= 1
+        fight = Fight(self.__hero, enemy)
+        fight_pos = 0
+        for elem in choices:
+            if self.__map[elem[0]][elem[1]] == 'E':
+                fight_pos = elem
+
+        if fight_pos != 0:
+            range_to_enemy = max(row - fight_pos[0], col - fight_pos[1])
+
+        for i in range(range_to_enemy):
+            fight.moving_fight()
+
+        fight.static_fight()
+
 
     def __movement(self, new_hero_pos):
         if self.__map[new_hero_pos[0]][new_hero_pos[1]] in ['#', 'T', 'E']:
@@ -147,20 +197,27 @@ class Dungeon:
                 self.__hero_pos = new_hero_pos
 
                 #enemy spawner
-                enemy = Enemy(health = random.randrange(50,300),
+                enemy = Enemy(health = random.randrange(50,150),
                               mana = random.randrange(20,100),
-                              damage = random.randrange(20,200))
+                              damage = random.randrange(20,80))
 
                 #initiate fight
-                #fight = Fight(self.__hero, enemy)
-                #fight.start_fight()
-
-                self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
+                fight = Fight(self.__hero, enemy)
+                result = fight.static_fight()
+                if result:
+                    print("Hero wins")
+                    self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
+                    return True
+                else:
+                    print("Hero is dead! Respawning...")
+                    self.spawn(self.__hero)
+                    return False
+            return True
         else:
             self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = '.'
             self.__hero_pos = new_hero_pos
             self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
-
+            return True
 
     def move_hero(self, direction):
         if direction in ['up', 'down', 'left', 'right']:
@@ -168,8 +225,8 @@ class Dungeon:
                 if self.__hero_pos[0] >= 1:
                     new_hero_pos = (self.__hero_pos[0] - 1,
                                     self.__hero_pos[1])
-                    self.__movement(new_hero_pos)
-                    self.print_map()
+                    if self.__movement(new_hero_pos):
+                        self.print_map()
                     return True
                 else:
                     return False
@@ -177,8 +234,8 @@ class Dungeon:
                 if self.__hero_pos[0] + 1 <= self.__rows - 1:
                     new_hero_pos = (self.__hero_pos[0] + 1,
                                     self.__hero_pos[1])
-                    self.__movement(new_hero_pos)
-                    self.print_map()
+                    if self.__movement(new_hero_pos):
+                        self.print_map()
                     return True
                 else:
                     return False
@@ -186,8 +243,8 @@ class Dungeon:
                 if self.__hero_pos[1] >= 1:
                     new_hero_pos = (self.__hero_pos[0],
                                     self.__hero_pos[1] - 1)
-                    self.__movement(new_hero_pos)
-                    self.print_map()
+                    if self.__movement(new_hero_pos):
+                        self.print_map()
                     return True
                 else:
                     return False
@@ -196,8 +253,8 @@ class Dungeon:
                 if self.__hero_pos[1] + 1 <= self.__cols - 1:
                     new_hero_pos = (self.__hero_pos[0],
                                     self.__hero_pos[1] + 1)
-                    self.__movement(new_hero_pos)
-                    self.print_map()
+                    if self.__movement(new_hero_pos):
+                        self.print_map()
                     return True
                 else:
                     return False
@@ -234,20 +291,3 @@ class HealthPotion:
         return int(self.__health)
 
 
-class Fight:
-    def __init__(self, hero, enemy):
-        self.__hero = hero
-        self.__enemy = enemy
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    #dun = Dungeon.generate_map(rows=12, cols=14)
-    #dun.print_map()
-    dung = Dungeon.generate_map(7, 14)

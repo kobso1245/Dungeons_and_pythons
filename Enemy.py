@@ -9,7 +9,7 @@ class Enemy():
         self.__spell = 0
 
     def is_alive(self):
-        if healt:
+        if self.__health:
             return True
         else:
             return False
@@ -57,26 +57,9 @@ class Enemy():
         else:
             print("Wrong input")
             return False
+    def atack(self):
+        return self.get_damage()
 
-    def attack(self, by=""):
-        if by == "":
-            return self.__damage
-        else:
-            if by == "weapon" and self.__weapon != 0:
-                return self.__weapon.get_damage()
-            if by == "weapon" and self.__weapon == 0:
-                print("No weapon equipped!!")
-                return False
-            if by == "spell" and self.__spell != 0:
-                if self.__mana >= self.__spell.get_mana_cost():
-                    self.__mana -= self.__spell.get_mana_cost()
-                    return self.__spell.get_damage()
-                else:
-                    return False
-
-            if by == "spell" and self.__spell == 0:
-                print("No spell found!")
-                return False
 
     def take_damage(self, damage):
         if self.__health - damage <= 0:

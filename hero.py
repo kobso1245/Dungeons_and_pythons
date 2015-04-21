@@ -1,7 +1,7 @@
 from weapon_and_spell import *
 
 class Hero:
-    def __init__ ( self, name="Bron", title="Dragonslayer", health=100, mana=100, mana_regeneration_rate=2):
+    def __init__ ( self, name="Bron", title="Dragonslayer", health=160, mana=100, mana_regeneration_rate=2):
         self.__name = name
         self.__title = title
         self.__start_health = health
@@ -49,12 +49,16 @@ class Hero:
 
 
     def can_cast( self):
-
-        if self.__mana > 0:
-            return True
+        if self.__spell != 0:
+            if self.__mana >= self.__spell.get_mana_cost():
+                return True
         return False
 
-
+    def get_cast_range(self):
+        if self.__spell:
+            return self__spell.get_cast_range()
+        else:
+            return 0
     def take_damage( self, damage_points):
 
         if self.__health < damage_points:
@@ -101,18 +105,20 @@ class Hero:
             print("This is not a spell")
             return False
 
-    def attack(self, by= ""):
+    def atack(self):
+        if self.can_cast():
+            return self.attack_helper(by="spell")
+        else:
+            return self.attack_helper(by="weapon")
+
+    def attack_helper(self, by= ""):
         if by == "weapon" :
             return self.__weapon.get_damage()
-        if by == "spell":
-            if self.__mana >= self.__spell.get_mana_cost():
-                self.__mana -= self.__spell.get_mana_cost()
-                return self.__spell.get_damage()
-            else:
-                return False
+        if by == "spell" :
+            self.__mana -= self.__spell.get_mana_cost()
+            return self.__spell.get_damage()
 
 
-a=Hero("ivan","sda",23,3,"sa")
 
 
 
