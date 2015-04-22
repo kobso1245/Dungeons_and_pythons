@@ -18,7 +18,7 @@
 
             col_number = self.__get_cols()
             while col_number < 0:
-                if self.__map[[self.__hero_pos[0]][col_number] == 'E':
+                if self.__map[[self.__hero_pos[0]][col_number]] == 'E':
                     return True
                 col_number -= 1
 
