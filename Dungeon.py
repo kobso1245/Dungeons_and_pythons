@@ -120,6 +120,7 @@ class Dungeon:
         row = self.__hero_pos[0]
         col = self.__hero_pos[1]
         choices = []
+        range_to_enemy = 0
         atack_range = self.__hero.get_cast_range()
 
         if atack_range:
@@ -153,7 +154,16 @@ class Dungeon:
         for i in range(range_to_enemy):
             fight.moving_fight()
 
-        fight.static_fight()
+        result = fight.static_fight()
+        if result:
+            print("Hero wins")
+            self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
+            return True
+        else:
+            print("Hero is dead! Respawning...")
+            self.spawn(self.__hero)
+            return False
+
 
 
     def __movement(self, new_hero_pos):
