@@ -124,22 +124,32 @@ class Dungeon:
         atack_range = self.__hero.get_cast_range()
 
         if atack_range:
-            while row - curr_vec >= 0 and curr_vec <= atack_range:
+            while row - curr_vec >= 0 and curr_vec <= atack_range :
+                if self.__map[row-curr_vec][col] == '#':
+                    break
                 choices.append((row - curr_vec, col))
                 curr_vec -= 1
             
             curr_vec = 1
-            while col + curr_vec < self.__cols and curr_vec <= atack_range:
+            while col + curr_vec < self.__cols and curr_vec <= atack_range :
+                if self.__map[row][col+curr_vec] == '#':
+                    break
                 choices.append((row, col + curr_vec))
                 curr_vec += 1
 
             curr_vec = 1
-            while row + curr_vec < self.__rows and curr_vec <= atack_range:
+            while row + curr_vec < self.__rows and curr_vec <= atack_range :
+                if self.__map[row + curr_vec][col] == '#':
+                    break
+                
                 choices.append((row + curr_vec, col))
                 curr_vec += 1
 
             curr_vec = 1
-            while col - curr_vec >= 0 and curr_vec <= atack_range:
+            while col - curr_vec >= 0 and curr_vec <= atack_range and self.__map[row][col-curr_vec] != '#':
+                if self.__map[row][col-curr_vec] == '#':
+                    break
+                
                 choices.append(row, col + curr_vec)
                 curr_vec -= 1
         fight = Fight(self.__hero, enemy)
