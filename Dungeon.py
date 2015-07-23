@@ -2,7 +2,7 @@ import random
 from weapon_and_spell import Weapon, Spell
 from Enemy import Enemy
 from hero import Hero
-from Fight import *
+from Fight import Fight
 class Dungeon:
     def __init__(self, path="", rows=5, cols=8):
        self.__hero = Hero()
@@ -108,6 +108,8 @@ class Dungeon:
         self.__hero_pos = self.__last_spawn
         self.__hero_pos = (0,0)
         self.__map[self.__hero_pos[0]][self.__hero_pos[1]] = 'H'
+        self.print_map()
+
 
     def hero_atack(self):
         enemy = Enemy(health = random.randrange(50,150),
@@ -172,7 +174,7 @@ class Dungeon:
         else:
             print("Hero is dead! Respawning...")
             self.spawn(self.__hero)
-            return False
+            return True
 
 
 
@@ -247,7 +249,7 @@ class Dungeon:
                                     self.__hero_pos[1])
                     if self.__movement(new_hero_pos):
                         self.print_map()
-                    return True
+                        return True
                 else:
                     return False
             if direction == 'down':
@@ -256,7 +258,7 @@ class Dungeon:
                                     self.__hero_pos[1])
                     if self.__movement(new_hero_pos):
                         self.print_map()
-                    return True
+                        return True
                 else:
                     return False
             if direction == 'left':
@@ -265,7 +267,7 @@ class Dungeon:
                                     self.__hero_pos[1] - 1)
                     if self.__movement(new_hero_pos):
                         self.print_map()
-                    return True
+                        return True
                 else:
                     return False
 
@@ -275,12 +277,13 @@ class Dungeon:
                                     self.__hero_pos[1] + 1)
                     if self.__movement(new_hero_pos):
                         self.print_map()
-                    return True
+                        return True
                 else:
                     return False
 
         else:
             print("Wrong command!!!")
+        return True
 
     def spawn_treasure(self):
         weapon_damage = random.randrange(10, 130)
