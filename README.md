@@ -1,3 +1,9 @@
+#How to play:
+  Run play.py
+  Choose the size of the board
+  Use the words up, down, left and right to navigate
+  Enjoy!
+
 #Done things list:
  - Dungeon can be imported from a file
  - Dungeon can be generated randomly
