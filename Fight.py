@@ -1,8 +1,8 @@
 class Fight:
+
     def __init__(self, hero, enemy):
         self.hero = hero
         self.enemy = enemy
-
 
     def static_fight(self):
         enemy_health = 1

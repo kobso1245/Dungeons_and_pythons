@@ -1,4 +1,5 @@
 class Enemy:
+
     def __init__(self, health=100, mana=100, damage=20):
         self.__health = health
         self.__start_health = health
@@ -33,7 +34,7 @@ class Enemy:
             self.__mana += mana_points
 
     def take_healing(self, healing_points):
-        if self.__health <=0:
+        if self.__health <= 0:
             return False
         else:
             if self.__heallth + healing_points > self.__start_health:
@@ -43,7 +44,7 @@ class Enemy:
         return True
 
     def equip(self, weapon):
-        if type(weapon) is Weapon:
+        if isinstance(weapon, Weapon):
             self.__weapon = weapon
             return
         else:
@@ -51,15 +52,15 @@ class Enemy:
             return False
 
     def learn(self, spell):
-        if type(spell) is Spell:
+        if isinstance(spell, Spell):
             self.__spell = spell
             return
         else:
             print("Wrong input")
             return False
+
     def atack(self):
         return self.get_damage()
-
 
     def take_damage(self, damage):
         if self.__health - damage <= 0:
